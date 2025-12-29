@@ -1,0 +1,1119 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Método Infância Sem Tela</title>
+    <meta name="description" content="Método Infância Sem Tela – como libertar seu filho das telas de forma leve e eficaz.">
+    <link href="https://fonts.googleapis.com/css2?family=Droid+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@800&display=swap" rel="stylesheet">
+    <style>
+        /* =========================
+           Variáveis e reset
+           ========================= */
+        :root{
+            --primary: #f4b324;            /* botões e accents */
+            --primary-light: #f4b324;
+            --accent: #00a8cc;
+            --bg-light: #f5f0e8;
+            --bg-hero: transparent;
+            --text-dark: #2c2c2c;
+            --text-darker: #2c2c2c;
+            --card-bg: #fff;
+            --muted: #2c2c2c;
+            --shadow: 0 4px 20px rgba(0,0,0,0.1);
+            --radius: 10px;
+            --max-width: 940px;
+        }
+
+        html {
+            background: #fff;
+            background-attachment: fixed;
+        }
+
+        /* Reset e estilos base */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Droid Sans', sans-serif;
+            color: var(--text-darker);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            background: transparent;
+        }
+        a { color: inherit; text-decoration:none; }
+
+        /* =========================
+           Animações (keyframes)
+           ========================= */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            will-change: opacity,transform;
+        }
+        .animate-on-scroll.animated {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        /* =========================
+           Utilities e componentes compartilhados
+           ========================= */
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 0 5px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+        .card-base { background: transparent; border-radius: var(--radius); box-shadow: none; }
+
+        .btn-primary {
+            background: var(--primary); /* amarelo uniforme */
+            color: white;
+            padding: 12px 32px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-block;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(244,179,36,0.18);
+
+            transition:
+                background 0.45s ease-in-out,
+                color 0.3s ease,
+                transform 0.3s ease,
+                box-shadow 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: #cc0000;
+            transform: scale(1.06);
+            box-shadow: 0 7px 27px rgba(0,0,0,0.30);
+        }
+
+        /* =========================
+           Header/Hero Section
+           ========================= */
+
+        .hero-section {
+            background: linear-gradient(347deg,rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 16%, rgba(255, 244, 201, 1) 43%, rgba(255, 244, 201, 1) 57%, rgba(216, 254, 255, 1) 100%);
+            padding: 30px 10px 70px 10px;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 850px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 70% 30%;
+            gap: 30px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-text h1 {
+            font-size: 2.6em;
+            color: #00a8cc;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            max-width: 600px;
+        }
+        .hero-text h1 .highlight { color: #cc0000; }
+        .hero-text p { font-size: 1.1em; color: var(--text-dark); margin-bottom: 30px; max-width: 600px; }
+
+        /* Placeholder para imagem */
+        .image-placeholder {
+            background: transparent;
+            border-radius: 10px;
+            min-height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            margin-left: -50px;
+        }
+
+        .ebook-image {
+            max-width: 85%;
+            height: auto;
+            display: block;
+        }
+
+	.price-hero {
+  	  margin-top: 15px;
+          font-size: 1.1rem;
+	  text-align: center;
+ 	  display: flex;
+ 	  justify-content: center;
+ 	  align-items: flex-end;
+ 	  line-height: 1.0;
+ 	  gap: 3px;
+	}
+
+	.price-hero .price-text {
+ 	   font-size: 0.95rem;
+	  transform: translateY(-4px);
+	}
+
+	.price-hero .price-valor {
+	    font-size: 1.3rem;
+	    font-weight: 800;
+	    color: #cc0000;
+	    font-family: 'Poppins', sans-serif;
+	}
+
+
+        .hero-cta-row { text-align: center; margin-top: 18px; } /* centralizado */
+        /* garantir bom espaçamento quando for mobile */
+        @media (max-width: 768px) {
+            .hero-content { grid-template-columns: 1fr; }
+            .hero-cta-row { text-align: center; margin-top: 18px; }
+        }
+
+        /*.secondary-section { background: linear-gradient(135deg, #e8f4f8 0%, #fff 100%); padding: 30px 20px; }*/
+        .secondary-content { max-width: var(--max-width); margin: 0 auto; padding: 0 10px;}
+
+        .content-box {
+            background: transparent;
+            margin-left: -25px;
+            padding: 0;
+            border-radius: 10px;
+            min-height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .content-img {
+            width: 90%;
+            border-radius: 12px;
+            display: block;
+            margin-top: 50px;
+        }
+
+        .text-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* centraliza verticalmente o conteúdo interno */
+            align-self: center;       /* garante que a coluna do grid (a própria .text-content) fique centralizada na linha */
+            margin-top: 80px;
+        }
+
+        .text-content p { color: var(--text-dark); margin-bottom: 20px; font-size: 1.1em; }
+        .text-content ul { list-style: none; margin: 30px 0; }
+        .text-content ul li { padding-left: 20px; position: relative; margin-bottom: 30px; color: var(--text-dark); font-size: 1.1em; text-align: left; }
+
+        .text-content ul li:before {
+            content: "";
+            position: absolute;
+            left: -20px;
+            top: 15px;
+            width: 25px;
+            height: 25px;
+            background-image: url('https://i.imgur.com/8IOsnlo.png');
+            background-size: 25px 25px;
+            background-repeat: no-repeat;
+        }
+
+        /* =========================
+           Seção de Benefícios
+           ========================= */
+
+        .wave-separator {
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            margin-top: -88px;
+        }
+
+        .wave-separator svg {
+            display: block;
+            width: 100%;
+            height: 140px; /* altura maior para deixar a curva mais orgânica */
+        }   
+
+        .benefits-section { background: #eaecef; padding: 1px 10px 40px 10px; text-align: center; }
+        .benefits-content { max-width: 600px; margin: 0 auto; margin-top: -15px; margin-bottom: 25px; }
+        .benefits-content h2 { font-size: 2.2em; color: var(--accent); margin-bottom: 25px; margin-top: -30px; }
+        .benefits-grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 15px; margin-bottom: 15px; margin-left: auto; margin-right: auto; }
+        .benefit-item {
+            background: var(--card-bg); padding: 18px; border-radius: 10px; text-align: left; font-size: 1.15em; box-shadow: 0 2px 10px rgba(0,0,0,0.05); transition: transform 0.3s ease; display:flex; gap:8px;
+        }
+        .benefit-item: hover { transform: translateY(-5px); }
+
+        .benefit-item:before {
+            content: "";
+            width: 25px;
+            height: 25px;
+            background-image: url('https://i.imgur.com/nGFiPnV.png');
+            background-size: 25px 25px;
+            background-repeat: no-repeat;
+            display: inline-block;
+            margin-right: 3px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .benefits-text p { text-align:left; margin-top: 40px; margin-bottom: 30px; max-width: 960px; color: var(--text-dark); line-height:1.7; font-size: 1.10em; }
+
+        .benefits-extra {
+            list-style: none;
+            padding-left: 0;
+            margin-left: 0;
+        }
+
+        .benefits-extra li {
+            position: relative;
+            text-align: left;
+            line-height: 1.6;
+            padding-left: 28px;
+            max-width: 620px;
+            margin: 10px auto 20px;
+            font-size: 1.10em;
+        }
+
+        .benefits-extra li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0.42em;
+            width: 20px;
+            height: 20px;
+            background-repeat: no-repeat;
+            background-size: 20px 20px;
+
+            /* Seta minimalista apontando para a direita — cor #cc0000 */
+            background-image: url("https://i.imgur.com/Wg6zDNS.png");
+        }
+
+        /* =========================
+           Bônus
+           ========================= */
+        .bonus-section { 
+            background: #fff;
+            padding: 0; /* retira espaço antes da onda */
+        }
+
+        .bonus-inner {
+            background: #fff;
+            padding: 30px 20px 60px 20px;
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        .bonus-content { max-width: var(--max-width); margin: 0 auto; text-align: center; }
+        .bonus-content h2 { font-size: 2.2em; color: var(--accent); margin-bottom: 40px; margin-top: -60px; }
+        .bonus-box { display: grid; grid-template-columns: 1fr 2fr; gap: 30px; align-items: center; }
+
+        .bonus-image {
+            background: transparent;
+            border-radius: 10px;
+            min-height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bonus-image img {
+            margin-left: 50px;
+        }
+
+        .bonus-text { text-align: left; }
+        .bonus-text h3 { font-size: 1.4em; color: #2c2c2c; margin-bottom: 25px; text-align: center; width: calc(100%); }
+        .bonus-text p { color: var(--text-dark); line-height: 1.6; font-size: 1.1em; width: calc(100%); }
+
+        /* =========================
+           Autor
+           ========================= */
+        .author-section { background: #e8f4f8; padding: 30px 20px 40px 20px; }
+        .author-content { max-width: var(--max-width); margin: 0 auto; }
+        .author-content h2 { font-size: 2.2em; color: var(--accent); text-align: center; margin-bottom: 25px; margin-top: -50px; }
+        .author-box { display: grid; grid-template-columns: 1fr 2fr; gap: 20px; align-items: start; }
+        
+        .author-image {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            overflow: hidden; /* importante para cortar a imagem no círculo */
+            margin-bottom: 25px;
+            margin-top: 20px;
+            background: transparent; /* remove fundo */
+        }
+
+        .author-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* garante corte perfeito no formato circular */
+            display: block;
+        }
+
+        .author-text p { color: var(--text-dark); margin-bottom: 20px; margin-left: 5px; line-height: 1.6; font-size: 1.1em; }
+
+        /* =========================
+           Preço
+           ========================= */
+        .price-section { background: #C6F5F4; padding: 30px 20px 30px 20px; text-align: center; }
+        .price-content { max-width: 960px; margin: 0 auto; }
+
+        .price-content h2 { font-size: 2em; color: #07a5c3; margin-bottom: 25px; text-align: center; margin-top: -40px; }
+        .price-content p { font-size: 1.1em; margin-bottom: 20px;}
+
+        .price-conteudo {
+            color: var(--text-dark);
+            font-size: 1.1em;
+            line-height: 1.6;
+            font-weight: bold;
+            margin: 0 auto 30px;
+            max-width: 100%;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            text-align: center;
+        }
+
+        .price-conteudo .price-item {
+            background: #fff;
+            padding: 15px 20px;
+            border-radius: 20px;
+            min-width: 220px;
+            max-width: 300px;
+            height: 120px;
+            position: relative;
+            box-shadow: 0 0 12px rgba(0,0,0,0.08);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+            border: 3px solid #00a8cc;
+        }
+
+    .price-conteudo {
+        position: relative; /* novo */
+    }
+        .price-conteudo .price-item:not(:last-child)::after {
+            position: absolute;
+            right: -35px;
+            top: 50%;
+            transform: translateY(-50%);
+
+            font-size: 3em;
+            font-weight: bold;
+            color: var(--accent);
+            transform-origin: center;
+        }
+
+        .price-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+        }
+
+        .price-plus {
+            font-size: 3em;
+            font-weight: bold;
+            color: var(--accent);
+            pointer-events: none;
+            line-height: 0.5;
+        }
+
+        /* Caixa geral opcional */
+        .price-box {
+            color: #FFF;
+            background: #00a8cc;
+            padding: 20px;
+            border-radius: 25px;
+            margin: 20px auto;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            max-width: 40%;
+        }
+
+        .price-amount { font-size: 4em; color: #FFF; font-weight: bold; margin: 10px 0; }
+
+        .price-amount {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 2px;
+        }
+
+        .price-amount .currency {
+            font-size: 0.6em;     /* 50% menor */
+            align-self: flex-start; /* alinha ao topo */
+            transform: translateY(-10px); /* ajuste fino (opcional) */
+            margin-right: -2px;
+        }
+
+        .price-amount .main {
+            font-size: 1.5em;       /* mantém o número principal */
+            line-height: 0.8;
+        }
+
+        .price-amount .cents {
+            font-size: 0.6em;     /* 50% menor */
+            align-self: flex-end; /* alinha à base */
+            transform: translateY(10px); /* ajuste fino (opcional) */
+            margin-left: -10px;
+        }
+
+        .price-details {
+	    color: #fff;
+	    font-size: 0.8em;
+	    font-weight: bold;
+	    background: transparent; /* fundo amarelo */
+	    padding: 2px 20px;   /* opcional, melhora a leitura */	
+	    border-radius: 0px;  /* opcional, combina com o estilo da página */
+	    display: block; /* garante que o fundo se ajuste ao texto */
+	}
+
+	.cards-flags {
+	    margin-top: -5px;
+	    margin-bottom: -5px;
+	    text-align: center;
+	}
+
+	.cards-flags img {
+ 	   max-width: 200px;
+	    height: auto;
+ 	   display: inline-block;
+	}
+
+        .payment-list { list-style: none; padding: 0; margin-top: 10px; text-align: center; }
+        .payment-list li { display: block; margin: 2px 5px; font-size: 1.1em; color: #FFF;}
+
+        .payment-list li:before {
+            content: "";
+            width: 20px;
+            height: 20px;
+            background-image: url('https://i.imgur.com/K7ojuzh.png');
+            background-size: 20px 20px;
+            background-repeat: no-repeat;
+            display: inline-block;
+            margin-right: 6px;
+            margin-top: 10px;
+            transform: translateY(3px);
+        }
+
+        .guarantee-section {
+            background: #fff;
+            padding: 30px 20px 45px 20px;
+            margin: 0;
+            max-width: 100%;
+        }
+
+	.guarantee-seal {
+	    margin-top: 10px;
+	    margin-bottom: 20px;
+	    text-align: center;
+	}
+
+	.guarantee-seal img {
+ 	   max-width: 200px;
+	    height: auto;
+ 	   display: inline-block;
+	}
+
+        .guarantee-section h2 { color: var(--accent); font-size: 2.2em; text-align: center; margin-bottom: 25px; margin-top: 10px; }
+        .guarantee-section p { color: var(--text-dark); line-height: 1.6; font-size: 1.1em; }
+
+        /* =========================
+           FAQ
+           ========================= */
+        .faq-section { background: linear-gradient(180deg,rgba(255, 243, 207, 1) 0%, rgba(245, 232, 234, 1) 94%, rgba(232, 244, 248, 1) 100%); padding: 30px 20px; }
+        .faq-content { max-width: 960px; margin: 0 auto; }
+        .faq-content h2 { font-size: 2.2em; color: var(--accent); text-align: center; margin-bottom: 45px; margin-top: 10px; }
+        .faq-item { background: white; padding: 18px; margin-bottom: 15px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .faq-item h3 { color: #2c2c2c; font-size: 1.2em; margin-bottom: 5px; }
+        .faq-item p { color: var(--text-dark); line-height: 1.6; }
+
+        /* =========================
+           Final CTA
+           ========================= */
+        .final-cta-section { background: #E8F4F8; padding: 30px 15px; text-align: center; margin-top: -15px; }
+        .final-cta-content { max-width: var(--max-width); margin: 0 auto; }
+        .final-cta-content h2 { font-size: 2.2em; color: #07a5c3; margin-bottom: 25px; }
+        .final-cta-content > p { font-size: 1.1em; color: var(--text-dark); margin-bottom: 15px; font-size: 1.1em;}
+        .cta-list { list-style: none; text-align: left; max-width: 620px; margin-left: auto; margin-right: auto; margin-bottom: 0px; }
+        .cta-list li { padding-left: -10px; position: relative; margin-bottom: 2px; font-size: 1.1em; color: var(--text-dark); }
+
+        .cta-list li:before {
+            content: "";
+            width: 20px;
+            height: 17px;
+            background-image: url('https://i.imgur.com/DmVyZvQ.png');
+            background-size: 20px 17px;
+            background-repeat: no-repeat;
+            display: inline-block;
+            margin-right: 12px;
+            margin-top: 12px;
+            transform: translateY(3px);
+        }
+
+        .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 30px; align-items: start; max-width: 620px; margin-left: auto; margin-right: auto; }
+        .comparison-box { padding: 20px; border-radius: 10px; min-height: 200px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .comparison-box.without { background: transparent;  margin-bottom:-20px; }
+        .comparison-box.with { background: transparent;  margin-bottom:-25px; }
+        .troque-label { font-weight:700; margin-bottom:-20px; text-align:center; font-size: 1.6em;}
+        .troque-label.red { color: #cc0000; }
+        .troque-label.blue { color: #07a5c3; }
+
+        .comparison-img {
+            width: 170%;
+            max-width: 300px;
+            border-radius: 10px;
+            display: block;
+        }
+
+        /* comparison note */
+        .comparison-note { text-align: center; margin-top: 30px; color: var(--text-dark); font-size: 1.05em; line-height: 1.6; }
+
+        .arrow-down {
+            width: 100%;
+            text-align: center;     /* Centraliza horizontalmente */
+            margin: 15px 0;         /* Espaçamento entre o texto e o botão */
+        }
+
+        .arrow-down img {
+            width: 70px;            /* tamanho ideal para seta */
+            max-width: 100px;       /* limite em telas maiores */
+            height: auto;
+            display: inline-block;
+        }
+
+        /* Footer */
+        footer { background: linear-gradient(0deg,rgba(0, 168, 204, 1) 0%, rgba(232, 244, 248, 1) 100%); color: white; text-align: center; padding: 50px 10px 15px 10px; }
+        footer p { font-size: 0.9em; line-height: 1.4; }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+
+            /* Aplica 1 coluna a todas as seções da página */
+            section {
+                display: grid;
+                grid-template-columns: 1fr;
+            }
+
+            .hero-content,
+            .secondary-content,
+            .bonus-box,
+            .author-box,
+            .comparison-grid,
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            gap: 17px !important;
+
+            }
+            
+            .hero-text h1 {
+                font-size: 2em;
+            }
+
+            .ebook-image {
+                max-width: 60%;
+                margin-top: -20px;
+            }
+
+            .image-placeholder {
+                margin-top: -20px;
+                margin-bottom: -10px;
+                margin-left: 0px;
+                }
+            
+            .text-content {
+                margin-top: 0;
+                margin-bottom: -15px;
+            }
+
+            h2,
+            .benefits-content h2,
+            .guarantee-section h2,
+            .faq-content h2 {
+                font-size: 1.8em;
+                line-height: 1.25;
+                margin-top: 12px;
+            }
+
+            h2,
+            .bonus-content h2 {
+                font-size: 1.8em;
+                line-height: 1.25;
+                margin-top: -30px;
+            }
+
+            h2,
+            .author-content h2,
+            .price-content h2 {
+                font-size: 1.8em;
+                line-height: 1.25;
+                margin-top: -20px;
+            }
+
+            h2,
+            .final-cta-content h2 {
+                font-size: 1.8em;
+                line-height: 1.25;
+                margin-top: -10px;
+            }
+
+            .price-amount {
+                font-size: 3.5em;
+            }
+
+            .secondary-content .content-box {
+                order: -1;
+            }
+
+            .price-box {
+                max-width: 100%;
+            }
+
+            body {
+                font-size: 90%;
+            }
+
+            .btn-primary {
+                font-size: 100%;
+                padding: 0.7em 2.0em;
+                margin-bottom: -20px;
+            }
+
+            .benefit-item:before {
+                margin-top: 0px;
+            }
+
+            .content-box {
+                margin-bottom: -20px;
+                margin-left: 0px;
+            }
+
+            .content-img {
+                width: 100%;
+            }
+
+            .text-content ul li {
+                padding-left: 40px;
+                margin-bottom: 20px;
+            }
+
+            .text-content ul li:before {
+                margin-top: 4px;
+                left: 0px;
+                top: 20px;
+            }
+
+            .bonus-image img {
+                margin-left: 0;
+                margin-right: 0;
+                margin: 0 auto;
+                display: block;
+            }
+
+            .bonus-text p {
+                width: 100%;
+                text-align: center;
+                margin: 0 auto;
+                text-align: left;
+            }
+
+            .bonus-text h3 {
+                width: 100%;
+                text-align: center;
+            }
+
+
+            .author-image {
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+
+            .inner-text-block{
+                margin-top: -30px;
+                padding: 0 10px;
+                }
+
+            section {
+                padding-left: 5%;
+                padding-right: 5%;
+            }
+        
+            .price-conteudo {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .price-conteudo .price-item {
+                width: 100%;
+                max-width: 350px;
+                margin: 0 auto;
+                height: auto;
+                padding: 10px;
+            }
+
+            .price-conteudo .price-item:not(:last-child)::after {
+                right: 50%;
+                top: auto;
+                bottom: -45px;
+                transform: translateX(50%);
+                font-size: 3em;
+            }
+            
+            .price-plus {
+                font-size: 3em;
+        }
+
+            .wave-separator {
+                margin-top: -45px; /* opcional – ajusta o encaixe da curva */
+            }
+
+            .wave-separator svg {
+                height: 70px; /* antes: 140px → curva reduzida */
+            }
+      }
+    }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content animate-on-scroll grid-2" data-reveal>
+                <div class="hero-text">
+                    <h1>Faça seu filho esquecer as telas definitivamente com o <span class="highlight">Método Infância Sem Tela</span></h1>
+                    <p>Esta é a solução que você estava procurando para libertar seu filho das telas de forma leve, sem brigas e com resultados comprovados.</p>
+
+                </div>
+ 
+            <div class="image-placeholder card-base"
+                 aria-label="Imagem do e-book">
+                 
+                <img src="https://i.imgur.com/VkOUsIZ.png" 
+                     alt="Imagem do e-book"
+                     style="width:80%;"
+                     class="ebook-image">
+            </div>
+            </div>
+
+            <div>
+		<p class="price-hero">
+		    <span class="price-text">Por apenas </span>
+		    <span class="price-valor">R$ 29,90</span>
+		</p>
+            </div>
+
+            <div class="hero-cta-row">
+		<a href="https://sun.eduzz.com/89AQ6756WD" target="_blank" rel="noopener noreferrer" class="btn-primary" style="display:inline-block;">Quero libertar meu filho das telas</a>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="secondary-content animate-on-scroll grid-2" data-reveal>
+                <div class="content-box card-base" aria-label="Espaço reservado para imagem">
+                    <img src="https://i.imgur.com/nzQbLVi.png" class="content-img" alt="Imagem ilustrativa">
+                </div>
+                <div class="text-content">
+                    <ul>
+                        <li>Você sente que perdeu o controle do tempo de tela do seu filho e não sabe como reverter a situação?</li>
+                        <li>Você já tentou limitar o uso, mas sempre acaba cedendo, se sentindo frustrada por isso?</li>
+                        <li>Seu filho tem crises de birra sempre que você manda ele sair do celular, do tablet ou da TV?</li>
+                    </ul>                    
+                </div>
+            </div>
+<div style="margin-top:22px; max-width:var(--max-width); margin-left:auto; margin-right:auto; color:var(--text-dark); line-height:1.6; text-align:left;">
+    <style>
+        .inner-text-block p { margin-bottom: 15px; font-size: 1.1em}
+    </style>
+
+    <div class="inner-text-block">
+        <p>Sabemos bem como é isso. Essa é a realidade de milhões de famílias atualmente. Estudos comprovam que o uso excessivo de telas tem causado uma série de danos à saúde das crianças como atraso na fala, problemas no sono, irritabilidade excessiva, queda no rendimento escolar, problemas de visão, isolamento social, ansiedade, atraso no desenvolvimento cognitivo, entre outros.</p>
+
+        <p>A boa notícia é que com o <span style="color: #cc0000;"><strong>Método Infância Sem Tela</strong></span> é possível romper este ciclo sem brigas, sem traumas, e com resultados comprovados. Proporcione ao seu filho uma infância mais feliz e saudável, longe dos perigos das telas digitais.</p>
+    </div>
+
+    <div style="text-align:center; margin-top:25px;">
+        <a href="#comprar" class="btn-primary" style="margin-top: 10px;">Eu quero</a>
+    </div>
+</div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <div class="wave-separator">
+    <svg viewBox="0 0 1440 160" preserveAspectRatio="none">
+        <path d="M0,60 C480,20 960,120 1440,60 L1440,160 L0,160 Z" 
+              fill="#eaecef"></path>
+    </svg>
+    </div>
+    <section class="benefits-section">
+        <div class="container">
+            <div class="benefits-content animate-on-scroll" data-reveal>
+                <h2>Benefícios do nosso método:</h2>
+                <div class="benefits-grid">
+                    <div class="benefit-item animate-on-scroll" data-reveal>Método validado</div>
+                    <div class="benefit-item animate-on-scroll" data-reveal>Baseado em evidência científica</div>
+                    <div class="benefit-item animate-on-scroll" data-reveal>Fácil implementação</div>
+                    <div class="benefit-item animate-on-scroll" data-reveal>Resultados visíveis em poucos dias</div>
+                    <div class="benefit-item animate-on-scroll" data-reveal>Sem gritos, traumas ou brigas</div>
+                    <div class="benefit-item animate-on-scroll" data-reveal>Resgate o interesse do seu filho pelas brincadeiras offline</div>
+                </div>
+
+                <div class="benefits-text">
+                    <p>Além do Método Infância Sem Tela, com o Guia <span style="color: #cc0000;"><strong>Como Fazer Seu Filho Esquecer as Telas Definitivamente</strong></span> você vai aprender como:</p>
+                    <ul class="benefits-extra">
+                        <li>Quebrar o ciclo vicioso das telas de forma leve e natural</li>
+                        <li>Criar uma rotina sem telas e cheia de conexão com o seu filho</li>
+                        <li>Substituir as telas por atividades saudáveis e enriquecedoras</li>
+                        <li>Proteger seu filho dos problemas causados pelo excesso de telas</li>
+                    </ul>
+                </div>
+
+                <a href="#comprar" class="btn-primary" style="margin-top: 20px;">Eu quero</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bonus Section -->
+    <div class="wave-separator">
+    <svg viewBox="0 0 1440 160" preserveAspectRatio="none">
+        <path d="M0,60 C480,20 960,120 1440,60 L1440,160 L0,160 Z" 
+              fill="#ffffff"></path>
+    </svg>
+    </div>
+    <section class="bonus-section">
+        <div class="container">
+         <div class="bonus-inner">
+            <div class="bonus-content animate-on-scroll" data-reveal>
+                <h2>Leve agora este bônus exclusivo!</h2>
+                <div class="bonus-box">
+                    <div class="bonus-image">
+                <img src="https://i.imgur.com/NvikLXK.png"
+     alt="Imagem Bônus"
+     style="width:75%; max-width:260px; border-radius:15px; display:block;">
+            </div>
+                    <div class="bonus-text">
+                        <h3>25 Estratégias Para Criar Seu Filho Longe das Telas</h3>
+                        <p>Além do método, você receberá este super bônus. Trata-se de um guia complementar com ideias práticas para entreter o seu filho em situações do dia a dia, sem precisar deixá-lo em frente a uma tela. Aprenda estratégias eficazes para utilizar com seu filho em viagens, restaurantes, salas de espera, ou quando precisar de tempo para realizar tarefas domésticas. São estratégias acessíveis e de fácil implementação, que lhe ajudarão a manter seu filho entretido, sem precisar recorrer às telas o tempo todo.</p>
+                    </div>
+                </div>
+                <a href="#comprar" class="btn-primary" style="margin-top: 40px;">Quero este bônus</a>
+            </div>
+          </div> 
+        </div>
+    </section>
+
+    <!-- Author Section -->
+    <div class="wave-separator">
+        <svg viewBox="0 0 1440 160" preserveAspectRatio="none">
+            <path d="M0,80 C360,140 1080,20 1440,80 L1440,160 L0,160 Z" fill="#e8f4f8"/>
+        </svg>
+    </div>
+    <section class="author-section">
+        <div class="container">
+            <div class="author-content animate-on-scroll" data-reveal>
+                <h2>Sobre o autor</h2>
+                <div class="author-box">
+                    <div class="author-image card-base" aria-label="Espaço reservado para foto do autor">
+                <img src="https://i.imgur.com/5fu4Mhf.png" alt="Foto do autor">
+                    </div>
+                    <div class="author-text">
+                        <p><span style="color: #cc0000;"><strong>Alexandre do Carmo</span></strong> é especialista em parentalidade na era digital. Cristão, casado, e pai de 2 filhos, Alexandre viveu de perto os efeitos nocivos que as telas podem provocar na vida de uma criança. Seu filho mais velho teve contato diário com as telas desde os 2 anos. Com o tempo, Alexandre e sua esposa começaram a notar que isso estava prejudicando a saúde e o comportamento dele, e resolveram tirar as telas de sua rotina. Entretanto, eles perceberam que essa tarefa era mais difícil do que imaginavam.</p>
+                        <p>Após diversas tentativas frustradas, Alexandre resolveu se especializar no assunto e desenvolveu um método eficaz, o qual ele utilizou para libertar seu filho das telas de maneira leve e definitiva. Atualmente, ele e sua esposa criam seus dois filhos sem telas e se sentem muito realizados por isso. Com uma abordagem prática e baseada em evidência, Alexandre mostra que sim, é possível criar filhos felizes e saudáveis, sem depender das telas digitais!</p>
+                        <p>Além do método, Alexandre criou o perfil <span style="color: #cc0000;"><strong>Infância Sem Tela</span></strong> no Instagram, onde fala sobre os impactos do uso de telas na infância e na adolescência para mais de 100 mil seguidores!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Price Section -->
+    <div class="wave-separator">
+        <svg viewBox="0 0 1440 160" preserveAspectRatio="none">
+            <path d="M0,80 C360,140 1080,20 1440,80 L1440,160 L0,160 Z" fill="#C6F5F4"/>
+        </svg>
+    </div>
+    <section class="price-section" id="comprar">
+        <div class="container">
+
+            <div class="price-content animate-on-scroll" data-reveal>
+                <h2>Invista na saúde e no futuro do seu filho</h2>
+        <div>
+        <p>Garanta agora:</p>
+        </div>
+
+            <div class="price-conteudo">
+            <div class="price-item">O Guia Como Fazer o Seu Filho Esquecer as Telas Definitivamente</div>
+            <div class="price-plus">+</div>
+            <div class="price-item">O Método Infância Sem Tela</div>
+            <div class="price-plus">+</div>
+            <div class="price-item">E o super bônus 25 Estratégias Para Criar Seu Filho Longe das Telas</div>
+            </div>
+        
+                <div class="price-box card-base">
+                    <p>por apenas:</p>
+                    <span class="price-amount">
+                        <span class="currency">R$</span>
+                        <span class="main">29</span>
+                        <span class="cents">,90</span>
+                    </span>                    
+                    <p class="price-details">ou 6 x R$ 5,61 no cartão</p>
+		<div class="cards-flags">
+		    <img src="https://i.imgur.com/g0XDpfR.png" alt="Bandeiras de cartões" />
+		</div>
+                    <ul class="payment-list">
+                        <li>Pagamento único</li>
+                        <li>Acesso imediato</li>
+                        <li>Garantia de 30 dias</li>
+                    </ul>
+
+                    <a href="https://sun.eduzz.com/89AQ6756WD" target="_blank" rel="noopener noreferrer" class="btn-primary" style="display:inline-block; margin-top: 20px; margin-bottom: 10px;">Eu quero</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+   <section class="guarantee-section animate-on-scroll" data-reveal aria-labelledby="garantia-title">
+        <div class="container">
+            <h2>Garantia total de 30 dias</h2>
+		<div class="guarantee-seal">
+		    <img src="https://i.imgur.com/fjZkAA7.png" alt="Selo de garantia" />
+		</div>
+            <p>Se em 7 dias você desistir da compra por qualquer motivo, nós devolvemos integralmente o seu dinheiro.</p><br>
+            <p> Mas não para por aí. Por confiar na eficácia do nosso método, nós oferecemos uma garantia extra: Se em 30 dias você não conseguir libertar seu(sua) filho(a) das telas com o nosso método, <span style="color: #cc0000;"><strong>nós devolveremos 100% do seu investimento</strong></span>. Basta nos encaminhar um e-mail solicitando o reembolso.</p><br>
+            <p>O que você está esperando? Aperte o botão abaixo e garanta agora seu acesso ao Método Infância Sem Tela!</p>
+	  <div style="text-align: center;">
+   	 <a href="https://sun.eduzz.com/89AQ6756WD"
+   	    target="_blank"
+  	     rel="noopener noreferrer"
+  	     class="btn-primary"
+    	   style="margin-top: 40px; margin-bottom: -5px;">
+   	     Quero meu acesso
+   	 </a>
+	  </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="faq-content animate-on-scroll" data-reveal>
+                <h2>Perguntas frequentes</h2>
+
+                <div class="faq-item animate-on-scroll" data-reveal>
+                    <h3>1. Como vou receber acesso ao material?</h3>
+                    <p>Você receberá o link de acesso diretamente no seu e-mail.</p>
+                </div>
+
+                <div class="faq-item animate-on-scroll" data-reveal>
+                    <h3>2. Preciso seguir o método à risca?</h3>
+                    <p>Sim, quanto mais fiel você for ao método, mais rápidos e consistentes serão os resultados.</p>
+                </div>
+
+                <div class="faq-item animate-on-scroll" data-reveal>
+                    <h3>3. É indicado para crianças de qualquer idade?</h3>
+                    <p>Nosso método é indicado para crianças até 10 anos de idade.</p>
+                </div>
+
+                <div class="faq-item animate-on-scroll" data-reveal>
+                    <h3>4. O método serve para qualquer tipo de tela?</h3>
+                    <p>Sim, funciona para celulares, tablets, TV, videogames, computadores, etc.</p>
+                </div>
+
+                <div class="faq-item animate-on-scroll" data-reveal>
+                    <h3>5. Em quanto tempo consigo notar os resultados?</h3>
+                    <p>A criança começa a apresentar melhora nos dois primeiros dias.</p>
+                </div>
+
+                <div class="faq-item animate-on-scroll" data-reveal>
+                    <h3>6. E se meu filho resistir muito?</h3>
+                    <p>Se isso acontecer, é possível contornar a situação aplicando as instruções contidas no método.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="final-cta-section">
+        <div class="container">
+            <div class="final-cta-content animate-on-scroll" data-reveal>
+                <h2>Não perca essa oportunidade!</h2>
+                <p>Quanto vale a <span style="color: #cc0000;"><strong>saúde física, mental e emocional</strong></span> do seu filho? Se você deseja:</p>
+
+                <ul class="cta-list">
+                    <li>Fim das brigas por causa das telas</li>
+                    <li>Seu filho mais calmo, focado e saudável</li>
+                    <li>Rotina familiar mais leve e conectada</li>
+                    <li>Seu filho protegido dos perigos das telas</li>
+                    <li>Recuperar o interesse do seu filho por brinquedos e atividades saudáveis</li>
+                </ul>
+
+                <div class="comparison-content" style="margin-top:36px;">
+
+                    <div class="comparison-grid">
+                        <div>
+                            <div class="troque-label red">Troque isso</div>
+                            <div class="comparison-box without card-base">
+                         <img src="https://i.imgur.com/OqAnrrg.png" alt="Antes" class="comparison-img">
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="troque-label blue">Por isso</div>
+                            <div class="comparison-box with card-base">
+                         <img src="https://i.imgur.com/ZEbUUlv.png" alt="Depois" class="comparison-img">
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="comparison-note">Aperte o botão abaixo e garanta seu acesso por apenas <span style="color: #cc0000;"><strong>R$29,90</strong></span>, com garantia total de 30 dias!</p>
+                    <div class="arrow-down">
+                        <img src="https://i.imgur.com/ZHf44ZK.gif" alt="Seta indicando botão">
+                    </div>
+                    <a href="https://sun.eduzz.com/89AQ6756WD" target="_blank" rel="noopener noreferrer" class="btn-primary" style="margin-top: 0px; display:inline-block;">Quero libertar meu filho das telas</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>Copyright© 2025 por Alexandre do Carmo Alves da Silva</p>
+            <p>Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // IntersectionObserver para animações ao entrar na viewport (mantive a abordagem anterior, mais eficiente)
+        (function() {
+            const observerOptions = { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0.08 };
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+        })();
+
+        // Smooth scroll para links internos (progressive enhancement)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href === '#') return;
+                const target = document.querySelector(href);
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
